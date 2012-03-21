@@ -1,8 +1,3 @@
-# SQLite version 3.x
-#   gem install postgresql
-#
-#   Ensure the SQLite 3 gem is defined in your Gemfile
-#   gem 'postgresql'
 development:
   adapter: postgresql
   encoding: unicode
@@ -22,6 +17,6 @@ test:
   username: rails
   password: rails
 
-#Overwritten by Heroku?
 production:
   adapter: postgresql
+  

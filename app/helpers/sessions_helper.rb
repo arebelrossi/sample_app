@@ -11,10 +11,11 @@ module SessionsHelper
 		!current_user.nil?
 	end
 
+	# assegna, ma non restituisce niente (funzioni con segno = nel nome)
 	def current_user=(user)
 		@current_user = user
 	end
-
+	# restituisce @current_user. Se nil, lo riempie con user_from_remember_token
 	def current_user
 		@current_user ||= user_from_remember_token
 	end
@@ -24,9 +25,9 @@ module SessionsHelper
 		User.find_by_remember_token(remember_token) unless remember_token.nil? 
 	end
 
-def sign_out
-	current_user = nil
-	cookies.delete(:remember_token)
-end
+	def sign_out
+		current_user = nil
+		cookies.delete(:remember_token)
+	end
 
 end

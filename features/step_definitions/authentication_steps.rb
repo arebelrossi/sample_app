@@ -7,7 +7,7 @@ When /^he submits invalid signin information$/ do
 end
 
 Then /^he should see an error message$/ do
-  page.should have_selector('div.alert.alert-error')
+  page.should  have_selector('div.alert.alert-error', text:'Invalid')
 end
 
 Given /^the user has an account$/ do
@@ -16,9 +16,9 @@ Given /^the user has an account$/ do
 end
 
 Given /^the user submits valid signin information$/ do
-  fill_in "Email",    with: @user.email
-  fill_in "Password", with: @user.password 
-  click_button "Sign in"
+    fill_in "Email",    with: @user.email
+    fill_in "Password", with: @user.password 
+    click_button "Sign in"
 end
 
 Then /^he should see his profile page$/ do

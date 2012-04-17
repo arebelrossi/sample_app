@@ -19,5 +19,4 @@ class SessionsController < ApplicationController
 		flash[:alert] = 'You have been signed out'
 		redirect_to root_path
 	end
-
 end

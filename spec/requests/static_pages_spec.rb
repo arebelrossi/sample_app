@@ -32,8 +32,15 @@ describe "Static pages" do
           page.should have_selector("li##{item.id}", text: item.content)
         end
       end
-    end
 
+      describe "user info" do
+        it { should have_selector('section#user-info') }
+        it { should have_selector('#user-info h1', text: user.name) }
+        describe "shows correct number of microposts" do
+          it { should have_selector('#user-info :last-child', text: "2 microposts") }
+        end
+      end
+    end
   end
 
   describe "Help page" do

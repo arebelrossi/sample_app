@@ -29,6 +29,15 @@ describe "Micropost pages" do
         expect { click_button "Post" }.should change(Micropost, :count).by(1)
       end
     end
+
+#    describe "splits very long words" do
+#      pending( "-- match() fails --")
+#       before do 
+#         fill_in 'micropost_content', with: ("a"* 31)
+#         click_button "Post"
+#       end
+#       its(:body) { should match('aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa&#8203;a') }
+#    end
   end
 
   describe "micropost destruction" do
@@ -42,5 +51,4 @@ describe "Micropost pages" do
       end
     end
   end
-
 end

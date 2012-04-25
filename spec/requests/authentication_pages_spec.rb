@@ -20,8 +20,6 @@ describe "Authentication" do
         it { should_not have_error_message('Invalid') }
       end
   	end
-  end
-
   	describe "with valid information" do
   		let(:user) { FactoryGirl.create(:user) }
   		before { valid_signin(user) }
@@ -37,7 +35,7 @@ describe "Authentication" do
         it { should have_link('Sign in') }
       end
     end
-
+  end
   describe "authorization" do
 
     describe "as non-admin user" do
@@ -55,6 +53,17 @@ describe "Authentication" do
     describe "for non-signed-in users" do
       let(:user) { FactoryGirl.create(:user) }
 
+      describe "in the Relationship controller" do
+        describe "sumbitting to the create action" do
+          before { post relationships_path }
+          specify { response.should redirect_to(signin_path) }
+        end
+        describe "sumbitting to the destroy action" do
+          before { delete relationship_path(1) }
+          specify { response.should redirect_to(signin_path) }
+        end        
+      end
+
       describe "in the Users controller" do
 
         describe "visiting the edit page" do
@@ -69,6 +78,16 @@ describe "Authentication" do
         describe "visiting the index page" do
           before { visit users_path }
           it { should have_selector('title', text: 'Sign in') }
+        end
+
+        describe "visiting the following page" do
+          before { visit following_user_path(user) }
+          it { should have_selector('title', text: "Sign in") }
+        end
+
+        describe "visiting the followers page" do
+          before { visit followers_user_path(user) }
+          it { should have_selector('title', text: "Sign in") }
         end
       end
 
@@ -85,6 +104,7 @@ describe "Authentication" do
           specify { response.should redirect_to(signin_path) }
         end
       end
+    end
 
     describe "as wrong user" do
       let(:user) { FactoryGirl.create(:user) }
@@ -102,19 +122,17 @@ describe "Authentication" do
       end
     end
 
-      describe "when attempting to visit a protected page" do
-        before do
-          visit edit_user_path(user)
-          fill_in "Email", with: user.email
-          fill_in "Password", with: user.password
-          click_button "Sign in"
-        end
-
-        describe "after signing in" do
-
-          it "should render the desired protected page" do
-            page.should have_selector('title', text: 'Edit user')
-          end
+    describe "when attempting to visit a protected page" do
+      let(:user) { FactoryGirl.create(:user) }
+      before do
+        visit edit_user_path(user)
+        fill_in "Email", with: user.email
+        fill_in "Password", with: user.password
+        click_button "Sign in"
+      end
+      describe "after signing in" do
+        it "should render the desired protected page" do
+          page.should have_selector('title', text: 'Edit user')
         end
       end
     end

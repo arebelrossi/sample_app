@@ -33,6 +33,17 @@ describe "Static pages" do
         end
       end
 
+      describe "followers/followinf counts" do
+        let(:other_user) { FactoryGirl.create(:user) }
+        before do
+          other_user.follow!(user)
+          visit root_path
+        end
+
+        it { should have_link("0 following", href: following_user_path(user)) }
+        it { should have_link("1 follower",  href: followers_user_path(user)) }
+      end
+
       describe "user info" do
         it { should have_selector('section#user-info') }
         it { should have_selector('#user-info h1', text: user.name) }
